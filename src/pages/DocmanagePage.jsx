@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import AllDocument from "../components/AllDocument";
-
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie"
 const DocmanagePage = () => {
+  const navigate= useNavigate()
+  useEffect(() => {
+    const user = Cookies.get("user")
+    if(!user){
+      navigate("/login")
+    }else{
+      return
+    }
+  },[])
   return (
     <>
       <Navbar />

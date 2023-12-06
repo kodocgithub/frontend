@@ -1,6 +1,7 @@
 import React from "react";
 import iconPlus from "../assets/icon-plus.svg";
 import { Link } from "react-router-dom";
+import jsCookie from "js-cookie";
 
 export default function Hero() {
   return (
@@ -20,12 +21,12 @@ export default function Hero() {
         </div>
       </div>
       <div className="absolute bottom-0 right-8 md:right-20">
-        <Link to={"/manage"}>
+        <Link to={"/create-document"}>
           <img src={iconPlus} alt="icon-plus" className="w-10 md:w-[5.25rem]" />
         </Link>
       </div>
       <div className="absolute -bottom-16">
-        <p className="text-gray-600 text-xs">username: user1</p>
+        <p className="text-gray-600 text-xs">username: {jsCookie.get("user")}</p>
       </div>
     </section>
   );
