@@ -6,14 +6,21 @@ import {
   XMarkIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const handleOpen = () => {
     setIsOpen(!isOpen);
   };
-
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate("/manage/keyword?title=" + search);
+    // console.log("search")
+    // alert("search")
+  };
   return (
     <header className="bg-green-3 relative">
       <nav className="container mx-auto px-8 py-6">
@@ -35,16 +42,18 @@ export default function Navbar() {
               </Link>
             </div>
           </div>
-          <div className="relative hidden lg:block">
+          <form className="relative hidden lg:block" onSubmit={handleSubmit}>
             <span className="absolute inset-y-0 left-0 flex items-center pl-3">
               <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />
             </span>
             <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               type="text"
               placeholder="search..."
               className="pl-10 pr-4 py-2 rounded-lg border bg-green-50 border-gray-300 focus:outline-none focus:border-green-1 focus:ring-green-1"
             />
-          </div>
+          </form>
           <div className="lg:hidden">
             <Bars3Icon className="h-8 w-8 text-black-1" onClick={handleOpen} />
           </div>
@@ -71,16 +80,18 @@ export default function Navbar() {
                 Manajemen Dokumen
               </span>
             </Link>
-            <div className="relative">
+            <form className="relative" onSubmit={handleSubmit}>
               <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                 <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />
               </span>
               <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 type="text"
                 placeholder="search..."
                 className="pl-10 pr-4 py-2 w-full rounded-lg border border-gray-300 focus:outline-none focus:border-green-1 focus:ring-green-1"
               />
-            </div>
+            </form>
           </div>
         </div>
       </div>

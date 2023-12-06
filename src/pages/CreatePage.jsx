@@ -18,7 +18,7 @@ const CreatePage = () => {
             judul : form.judul
         })
         alert("dokumen dibuat!")
-        navigate("/manage")
+        navigate(`/edit/${response.data.data._id}`)
     }
 
   const navigate= useNavigate()
