@@ -7,6 +7,7 @@ import DoceditPage from "./pages/DoceditPage";
 import CreatePage from "./pages/CreatePage";
 import SearchPage from "./pages/SearchPage";
 import EditPage from "./pages/EditPage";
+import DetailPage from "./pages/DetailPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/create-document" element={<CreatePage />}></Route>
       <Route path="/edit-document/:id" element={<EditPage />}></Route>
       <Route path="/edit/:id" element={<DoceditPage />}></Route>
+      <Route path="/detail/:id" element={<DetailPage />}></Route>
       
     </Routes>
   );

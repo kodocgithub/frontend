@@ -1,18 +1,35 @@
-import {  DocumentTextIcon, PencilIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
+import {
+  DocumentTextIcon,
+  EyeIcon,
+  PencilIcon,
+  PencilSquareIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import axios from "axios";
-import {URL_BACKEND} from "../config"
-import React from "react";
+import { URL_BACKEND } from "../config";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 function ListDocument(props) {
   const handleDelete = async () => {
-    const response = await axios.delete(`${URL_BACKEND}/dokumen/${props.id}`)
-    alert(response.data.message)
-    window.location.reload()
-  }
+    const response = await axios.delete(`${URL_BACKEND}/dokumen/${props.id}`);
+    alert(response.data.message);
+    window.location.reload();
+  };
 
-  const navigate= useNavigate()
-  
+  const navigate = useNavigate();
+  const reportTemplateRef = useRef(null);
+  const handleDownload = () => {
+    const doc = new jsPDF();
+    const content = props.content;
+    doc.html(content, {
+      async callback(doc) {
+        await doc.save("pdf_name");
+      },
+    });
+  };
 
   return (
     <li
@@ -24,9 +41,22 @@ function ListDocument(props) {
         <p>{props.judul}</p>
       </div>
       <div className="flex gap-4 items-center">
-        <PencilIcon onClick={props.onClick} className="w-12 cursor-pointer rounded-full p-3 hover:bg-green-500"/>
-        <PencilSquareIcon onClick={()=> navigate(`/edit-document/${props.id}`)} className="w-12 cursor-pointer rounded-full p-3 hover:bg-green-500"/>
-        <TrashIcon onClick={handleDelete} className="w-12 cursor-pointer rounded-full p-3 hover:bg-green-500"/>
+        <EyeIcon
+          onClick={() => navigate(`/detail/${props.id}`)}
+          className="w-12 cursor-pointer rounded-full p-3 hover:bg-green-500"
+        />
+        <PencilIcon
+          onClick={props.onClick}
+          className="w-12 cursor-pointer rounded-full p-3 hover:bg-green-500"
+        />
+        <PencilSquareIcon
+          onClick={() => navigate(`/edit-document/${props.id}`)}
+          className="w-12 cursor-pointer rounded-full p-3 hover:bg-green-500"
+        />
+        <TrashIcon
+          onClick={handleDelete}
+          className="w-12 cursor-pointer rounded-full p-3 hover:bg-green-500"
+        />
       </div>
     </li>
   );
