@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import jsCookie from "js-cookie";
 
 export default function Hero() {
+  // const handleLogout
   return (
     <section className="py-16 px-8 md:px-20 h-[75vh]">
       <div className="flex flex-col gap-10 text-green-800">
@@ -27,6 +28,7 @@ export default function Hero() {
       </div>
       <div className="absolute -bottom-16">
         <p className="text-gray-600 text-xs">username: {jsCookie.get("user")}</p>
+        {/* <button onClick={() => jsCookie.log}>Logout</button> */}
       </div>
     </section>
   );
