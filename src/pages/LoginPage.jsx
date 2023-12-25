@@ -2,14 +2,22 @@ import React, { useState } from "react";
 import background from "../assets/background-kodoc.svg";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import axios from "axios";
+import { URL_BACKEND } from "../config";
 
 const LoginPage = () => {
   const navigate = useNavigate()
   const [name, setName] = useState()
 
   const handleSubmit = () =>{
-    Cookies.set("user",name, { expires: 1 })
-    navigate("/")
+    const login = async () =>{
+      const response = await axios.post(`${URL_BACKEND}/user`, {name})
+      await Cookies.set("user",response.data.data.name, { expires: 1 })
+    }
+    login()
+    setTimeout(() => {
+      navigate("/")
+    },1000)
   }
   return (
     <section className="h-screen w-full">
